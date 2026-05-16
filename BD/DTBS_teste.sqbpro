@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="" readonly="0" foreign_keys="" case_sensitive_like="" temp_store="" wal_autocheckpoint="" synchronous=""/><attached/><window><main_tabs open="browser pragmas structure query" current="2"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="100"/><column_width id="3" width="1923"/><column_width id="4" width="0"/></tab_structure><tab_browse><table title="." custom_title="0" dock_id="2" table="0,0:"/><dock_state state="000000ff00000000fd00000001000000020000043c000002e6fc0100000002fb000000160064006f0063006b00420072006f007700730065003101000000000000043c0000000000000000fb000000160064006f0063006b00420072006f00770073006500320100000000ffffffff0000011e00ffffff0000025e0000000000000004000000040000000800000008fc00000000"/><default_encoding codec=""/><browse_table_settings/></tab_browse><tab_sql><sql name="SQL 1*">PRAGMA foreign_keys = ON;
+DROP TABLE IF EXISTS Rendimento;
+DROP TABLE IF EXISTS Fase;
+DROP TABLE IF EXISTS Usuario;
+DROP TABLE IF EXISTS Conteudo;
+
+CREATE TABLE Conteudo (
+    titulo   TEXT PRIMARY KEY NOT NULL UNIQUE,
+    conteudo TEXT NOT NULL,
+    nivel    TEXT NOT NULL UNIQUE,   -- UNIQUE para poder ser referenciado por Fase.nivel
+    gabarito TEXT
+);
+
+CREATE TABLE Usuario (
+    email       TEXT PRIMARY KEY NOT NULL UNIQUE,
+    nome        TEXT NOT NULL,
+    senha       TEXT NOT NULL,
+    datacriacao TEXT NOT NULL DEFAULT (datetime('now','localtime'))
+);
+CREATE TABLE Fase (
+    id     TEXT PRIMARY KEY NOT NULL UNIQUE,
+    titulo TEXT,
+    nivel  TEXT,
+    email  TEXT,
+    FOREIGN KEY (titulo) REFERENCES Conteudo(titulo),
+    FOREIGN KEY (nivel)  REFERENCES Conteudo(nivel),
+    FOREIGN KEY (email)  REFERENCES Usuario(email)
+);
+
+ALTER TABLE Usuario ADD COLUMN nivel   TEXT REFERENCES Fase(nivel);
+ALTER TABLE Usuario ADD COLUMN fase_id TEXT REFERENCES Fase(id);
+
+CREATE TABLE Rendimento (
+    conteudo TEXT NOT NULL,
+    acertos  INTEGER NOT NULL,
+    erros    INTEGER NOT NULL,
+    dia      TEXT NOT NULL,           -- formato 'YYYY-MM-DD'
+    email    TEXT NOT NULL,
+    PRIMARY KEY (conteudo, email, dia),
+    FOREIGN KEY (conteudo) REFERENCES Conteudo(titulo),
+    FOREIGN KEY (email)    REFERENCES Usuario(email)
+);</sql><current_tab id="0"/></tab_sql></sqlb_project>
