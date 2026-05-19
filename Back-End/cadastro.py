@@ -1,65 +1,55 @@
 import sqlite3
 from usuario import Usuario
+from verificacao import *
 
-conn = sqlite3.connect('BD/DTBS_teste.db')
+conn = sqlite3.connect(r'Data-Base/DTBS_teste.db')
 cursor = conn.cursor()
 
-#verifica se algum campo está vazio
-def VerificarCampos(nome, email, nome_usuario, senha, confirmar_senha):
-    if not nome or not email or not nome_usuario or not senha or not confirmar_senha:
-        return False
-    return True
+class Cadastro:
+    def __init__(self, usuario, confirmar_senha):
+        self.usuario = usuario
+        self.confirmar_senha = confirmar_senha
+        self.campos = {
+            "nome": f'{usuario.nome}', 
+            "email": f'{usuario.email}', 
+            "senha": f'{usuario.senha}', 
+            "nome_usuario": f'{usuario.nome_usuario}', 
+            "confirmar_senha": f'{confirmar_senha}'
+        }
 
-#verifica se o campo senha é igual ao campo confirmar senha
-def VerificarSenhaIgual(senha, confirmar_senha):
-    if senha != confirmar_senha:
-        return False
-    return True
+    def CadastrarUsuario(self, usuario, confirmar_senha):
+        verificador = Verificacoes()
+        
+        campo_vazio = []
+        for campo in self.campos:                        # campo é a chave ("nome", "email", etc.)
+            if not verificador.VerificarCampos(self.campos[campo]):   # verifica o valor
+                campo_vazio.append(f"Preencha o campo: {campo}")
 
-#verifica se a senha possui os requisitos mínimos de segurança
-def VerificarSenhaForte(senha):
-    if len(senha) < 8:
-        return False
-    if not any(c.isupper() for c in senha):
-        return False
-    if not any(c.islower() for c in senha):
-        return False
-    if not any(c.isdigit() for c in senha):
-        return False
-    if not any(c in "!@#$%^&*()_+-=[]{}|;':\"<>,./?" for c in senha):
-        return False
-    return True
+        if campo_vazio:        # <-- CORRIGIDO: se a lista não estiver vazia, retorna os erros
+            return campo_vazio
 
-#verifica se o email ja existe no banco de dados
-def VerificarEmailUnico(email):
-    cursor.execute("SELECT * FROM Usuario WHERE email = ?", (email,))
-    if cursor.fetchone():
-        return False
-    return True
+        # Só chega aqui se todos os campos estiverem preenchidos
+        if not verificador.VerificarSenhaIgual(usuario.senha, confirmar_senha):
+            return "As senhas não coincidem"
+        if not verificador.VerificarSenhaForte(usuario.senha):
+            return "A senha não atende aos requisitos de segurança"
+        
+        cursor.execute("INSERT INTO Usuario (email, nome, id_usuario, senha) VALUES (?, ?, ?, ?)", 
+                      (usuario.email, usuario.nome, usuario.nome_usuario, usuario.senha))
+        conn.commit()
+        conn.close()
+        return "Usuário cadastrado com sucesso"
 
-#verifica se o nome de usuario ja existe no banco de dados
-def VerificarNomeUsuarioUnico(nome_usuario):
-    cursor.execute("SELECT * FROM Usuario WHERE nome_usuario = ?", (nome_usuario,))
-    if cursor.fetchone():
-        return False
-    return True
+# CORREÇÃO AQUI:
+nome = input('nome:')
+email = input('nome:')
+senha = input('nome:')
+id_usu = input('nome:')
+novo_usuario = Usuario(f'{email}', f'{nome}', f'{id_usu}', f'{senha}')
 
-def CadastrarUsuario(usuario):
-    if not VerificarCampos(usuario.nome, usuario.email, usuario.nome_usuario, usuario.senha, usuario.confirmar_senha):
-        return "Preencha todos os campos"
-    if not VerificarSenhaIgual(usuario.senha, usuario.confirmar_senha):
-        return "As senhas não coincidem"
-    if not VerificarSenhaForte(usuario.senha):
-        return "A senha não atende aos requisitos de segurança"
-    if not VerificarEmailUnico(usuario.email):
-        return "O email já está cadastrado"
-    if not VerificarNomeUsuarioUnico(usuario.nome_usuario):
-        return "O nome de usuário já está em uso"
-    cursor.execute("INSERT INTO Usuario (email, nome, nome_usuario, senha) VALUES (?, ?, ?, ?)", (usuario.email, usuario.nome, usuario.nome_usuario, usuario.senha))
-    conn.commit()
-    return "Usuário cadastrado com sucesso"
+# Criar instância da classe Cadastro
+cadastro_obj = Cadastro(novo_usuario, "Senh@123")
 
-novo_usuario = Usuario("João", "joao@email.com", "jubileu", "Senh@123", "Senh@123")
-
-a = CadastrarUsuario(novo_usuario)
+# Chamar o método através da instância
+a = cadastro_obj.CadastrarUsuario(usuario=novo_usuario, confirmar_senha="Senh@123")
 print(a)
