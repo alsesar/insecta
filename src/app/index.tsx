@@ -1,5 +1,5 @@
 import { LinearGradient } from "expo-linear-gradient"
-import { Link } from "expo-router"
+import { Link, router } from "expo-router"
 import { useState } from "react"
 import { Alert, Image, StyleSheet, Text, View } from "react-native"
 
@@ -24,17 +24,15 @@ export default function IndexPage() {
         alert("Use um Gmail válido")
         return
     }
+     router.push("/main")
 
    }
 
-    function handleSignIn() {
-        if( !email.trim() || !password.trim()) {
-      return Alert.alert ("Entrar","preencha email e senha para entrar")
 
-        }
+
         //Alert.alert ("Entrar,Função de entrar acionada")
             //console.log(email, password)
-    }
+    
 
     return(
 
