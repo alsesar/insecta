@@ -18,10 +18,10 @@ export default function IndexPage() {
             return Alert.alert ("Entrar","Preencha todo os campos para se cadastrar")
       
               }
-                const regex = /@gmail\.com$/
+                const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     
         if (!regex.test(email)) {
-            alert("Use um Gmail válido")
+            alert("Use um email válido")
             return
         }
             const regexSenha =

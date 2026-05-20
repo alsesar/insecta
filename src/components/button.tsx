@@ -20,20 +20,18 @@ container: {
 width: "100%",
 height: 48,
 borderRadius: 8,
-backgroundColor:"#FFC43F"
+backgroundColor:"#FFC43F",
+
 
 },
 
 label: {
-    color:"#fff",
+    color:"#000166",
     fontSize: 16,
     fontWeight: 600,
     textAlign: "center",
     gap: "12",
-    marginTop:14
-
-
-
+    marginTop:13
 
 }
 

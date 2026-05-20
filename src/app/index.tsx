@@ -18,10 +18,10 @@ export default function IndexPage() {
         return Alert.alert ("Entrar","Preencha email e senha para entrar")
   
           }
-            const regex = /@gmail\.com$/
+            const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
     if (!regex.test(email)) {
-        alert("Use um Gmail válido")
+        alert("Use um email válido")
         return
     }
      router.push("/main")
