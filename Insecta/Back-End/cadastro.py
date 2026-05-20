@@ -2,7 +2,7 @@ import sqlite3
 from usuario import Usuario
 from verificacao import *
 
-conn = sqlite3.connect(r'Data-Base/DTBS_teste.db')
+conn = sqlite3.connect(r'Data-Base\DTBS_teste.db')
 cursor = conn.cursor()
 
 class Cadastro:
@@ -17,21 +17,21 @@ class Cadastro:
             "confirmar_senha": f'{confirmar_senha}'
         }
 
-    def CadastrarUsuario(self, usuario, confirmar_senha):
+    def cadastrar_usuario(self, usuario, confirmar_senha):
         verificador = Verificacoes()
         
         campo_vazio = []
         for campo in self.campos:                        # campo é a chave ("nome", "email", etc.)
-            if not verificador.VerificarCampos(self.campos[campo]):   # verifica o valor
+            if not verificador.verificar_campos(self.campos[campo]):   # verifica o valor
                 campo_vazio.append(f"Preencha o campo: {campo}")
 
-        if campo_vazio:        # <-- CORRIGIDO: se a lista não estiver vazia, retorna os erros
+        if campo_vazio:    
             return campo_vazio
 
         # Só chega aqui se todos os campos estiverem preenchidos
-        if not verificador.VerificarSenhaIgual(usuario.senha, confirmar_senha):
+        if not verificador.verificar_senha_igual(usuario.senha, confirmar_senha):
             return "As senhas não coincidem"
-        if not verificador.VerificarSenhaForte(usuario.senha):
+        if not verificador.verificar_senha_forte(usuario.senha):
             return "A senha não atende aos requisitos de segurança"
         
         cursor.execute("INSERT INTO Usuario (email, nome, id_usuario, senha) VALUES (?, ?, ?, ?)", 
@@ -40,7 +40,6 @@ class Cadastro:
         conn.close()
         return "Usuário cadastrado com sucesso"
 
-# CORREÇÃO AQUI:
 nome = input('nome:')
 email = input('nome:')
 senha = input('nome:')
@@ -51,5 +50,5 @@ novo_usuario = Usuario(f'{email}', f'{nome}', f'{id_usu}', f'{senha}')
 cadastro_obj = Cadastro(novo_usuario, "Senh@123")
 
 # Chamar o método através da instância
-a = cadastro_obj.CadastrarUsuario(usuario=novo_usuario, confirmar_senha="Senh@123")
+a = cadastro_obj.cadastrar_usuario(usuario=novo_usuario, confirmar_senha="Senh@123")
 print(a)

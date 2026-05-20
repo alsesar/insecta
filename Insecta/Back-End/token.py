@@ -6,13 +6,13 @@ class Codigo:
     def __init__(self, tamanho=6):
         self.tamanho = tamanho
         
-    def GerarCodigo(self):
+    def gerar_codigo(self):
         caracteres = string.ascii_letters + string.digits + "!@#$%&*"
-        return f"[{''.join(secrets.choice(caracteres) for _ in range(self.tamanho))}, {datetime.now()}]"
+        return f"{''.join(secrets.choice(caracteres) for _ in range(self.tamanho))}, {datetime.now()}"
 
-    def EnviarCodigo(self, email, novo_codigo=False):
+    def enviar_codigo(self, email, novo_codigo=False):
         import sqlite3
-        conn = sqlite3.connect(r'Data-Base/DTBS_teste.db')
+        conn = sqlite3.connect(r'Data-Base\DTBS_teste.db')
         conn.execute("PRAGMA foreign_keys = ON")
         cursor = conn.cursor()
 
@@ -25,11 +25,10 @@ class Codigo:
         # Busca o token bruto do banco (string)
         token_bruto = cursor.execute("SELECT token FROM Usuario WHERE email = ?", (email,)).fetchone()
 
-        # Faz o parsing manual da string do token (sem ast.literal_eval)
+        # Faz o parsing manual da string do token
         if token_bruto and token_bruto[0]:
             token_str = token_bruto[0]                     # "[código, data]"
-            conteudo = token_str[1:-1]                     # remove os colchetes: "código, data"
-            partes = conteudo.split(', ', 1)               # separa código e data
+            partes = token_str.split(', ', 1)               # separa código e data
             codigo_token = partes[0]
             data_str = partes[1]
             data_token = datetime.strptime(data_str, '%Y-%m-%d %H:%M:%S.%f')
@@ -45,24 +44,17 @@ class Codigo:
                 return codigo_token          # token ainda válido
             else:
                 # Token expirado, gera um novo
-                novo_token = self.GerarCodigo()
+                novo_token = self.gerar_codigo()
                 cursor.execute('UPDATE Usuario SET token = ? WHERE email = ?', (novo_token, email))
                 conn.commit()
                 conn.close()
                 return f"Token expirado. Seu novo token é {novo_token}"
 
-        elif codigo_token:
-            # Token existe, mas foi solicitado um novo
-            novo_token = self.GerarCodigo()
+
+        else:
+            # Nenhum token existente, gera o primeiro
+            novo_token = self.gerar_codigo()
             cursor.execute('UPDATE Usuario SET token = ? WHERE email = ?', (novo_token, email))
             conn.commit()
             conn.close()
             return f"Seu novo token é {novo_token}"
-
-        else:
-            # Nenhum token existente, gera o primeiro
-            novo_token = self.GerarCodigo()
-            cursor.execute('UPDATE Usuario SET token = ? WHERE email = ?', (novo_token, email))
-            conn.commit()
-            conn.close()
-            return f"Seu token é {novo_token}"

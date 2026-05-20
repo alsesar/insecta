@@ -1,6 +1,6 @@
 class Verificacoes:
     @staticmethod
-    def VerificarSenhaForte(senha):          # sem self
+    def verificar_senha_forte(senha):   
         if len(senha) < 8:
             return False
         if not any(c.isupper() for c in senha):
@@ -14,9 +14,9 @@ class Verificacoes:
         return True
 
     @staticmethod
-    def VerificarSenhaIgual(senha, confirmar_senha):   # sem self
+    def verificar_senha_igual(senha, confirmar_senha):  
         return senha == confirmar_senha
 
     @staticmethod
-    def VerificarCampos(campo):               # sem self
+    def verificar_campos(campo):           
         return bool(campo and campo.strip())
