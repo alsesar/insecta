@@ -3,5 +3,7 @@
     "source.fixAll": "explicit",
     "source.organizeImports": "explicit",
     "source.sortMembers": "explicit"
-  }
+  },
+  "pokemon-pets.background": "Non_pokemon_grass",
+  "pokemon-pets.filter": "Soft Night"
 }

@@ -1,8 +1,7 @@
 import { LinearGradient } from "expo-linear-gradient"
 import { Link } from "expo-router"
-import { Alert, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
+import { Alert, Image, StyleSheet, Text, View } from "react-native"
 
-import { Button } from "@/components/button"
 
 
 
@@ -20,30 +19,16 @@ function Social() {
 
 <LinearGradient colors={['#000166', '#0002CC']} style={styles.container}>
     <View style={styles.upBar}></View>
-    <Link href="/config" style={styles.configL}><Image source={require("../assets/logolinhayellow.png")} style={styles.config} /></Link>
+    <Link href="/main" style={styles.configL}><Image source={require("../assets/logolinhayellow.png")} style={styles.config} /></Link>
         
-    <View style={styles.card}>
-            <View style={styles.topCard}>
-            <Image source={require("../assets/patchdourado1.png")} style={styles.coin}/>
-                <Text style={styles.title}>Exercício 1</Text>
-            </View>
-                <View style={styles.miniCard}>
-                <Image source={require("../assets/logoempemaobixapiscada.png")} style={styles.joana}/>
-                </View>
-        </View>
-    
+    <View style={styles.card}></View>
+            <Text style={styles.title}>Sobre:</Text>
+            <Text style={styles.sobre}>
+            Mantis é uma equipe formada por Adriel Veiga, Alice Cezar de Souza, Bryan Chagas, Felipe S. Santos e Thainá D. Chaves, estudantes do 3DSEM da Etec de Praia Grande.
+            Mantis é uma aplicação dedicada a tornar o conhecimento em informática mais acessível para todos. Nosso projeto nasceu da ideia de que aprender o básico sobre tecnologia não deve ser algo complicado ou distante da realidade das pessoas.
+            </Text>
+            <Image source= {require("../assets/logoempeolhandopracima.png")} style={styles.joana} />
     <View style={styles.downBar}></View>
-
-        <TouchableOpacity onPress={() => alert("Página indisponível no momento")}><Link href="/social" style={styles.socialL}><Image source={require("../assets/users-alt (1).png")} style={styles.social}/></Link></TouchableOpacity>
-        <Link href="/main" style={styles.homeL}><Image source={require("../assets/home (1).png")} style={styles.home}/></Link>
-        <Link href="/user" style={styles.userL}><Image source={require("../assets/user (1).png")} style={styles.user}/></Link>
- 
-    <Button 
-        style={styles.start}
-        onPress={Iniciar}
-        label="Iniciar"
-    />
-
 
 </LinearGradient>
     
@@ -78,8 +63,10 @@ const styles = StyleSheet.create({
         padding: 150,
         borderRadius: 20,
         position:"absolute",
-        height: 400,
-        marginBottom:150,
+        height:600,
+        width:350
+
+    
     },
 
     miniCard: {
@@ -99,12 +86,18 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: "bold", 
         position:"absolute",
-        marginLeft:80,
-        marginTop:30,
+        marginBottom:500,
 
+        
+    },
 
-
-
+    sobre: {
+        color:'#fff',
+        fontSize: 16,
+        fontWeight: "bold", 
+        position:"absolute",
+        marginBottom:250,
+        marginLeft:15
 
         
     },
@@ -130,7 +123,7 @@ const styles = StyleSheet.create({
     joana:{
         width:200,
         height:200,
-        marginLeft:45
+        marginTop:415
     },
 
     start:{

@@ -1,6 +1,6 @@
 import { LinearGradient } from "expo-linear-gradient"
 import { Link } from "expo-router"
-import { Image, StyleSheet, View } from "react-native"
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 
 
 
@@ -10,13 +10,28 @@ export default function IndexPage() {
     return(
 
 <LinearGradient colors={['#000166', '#0002CC']} style={styles.container}>
+   <View style={styles.upBar}></View>
+        <Link href="/config" style={styles.configL}><Image source={require("../assets/logolinhayellow.png")} style={styles.config} /></Link>
+        <View style={styles.profile}>
+                <Text style={styles.title}>Seu Perfil</Text>
+                    <Image source={require("../assets/profile.jpeg")} style={styles.foto}/>
+                <View style={styles.conq}>  
+                    <Text style={styles.subtitle}>Conquistas:</Text>
+                    <Image source={require("../assets/Trofeu.png")} style={styles.conqf}/>
+                </View>
+        </View>
+        <View style={styles.friends}>
+            <Text style={styles.subtitleF}>Seus Amigos:</Text>
+            <Image source={require("../assets/friend.jpeg")} style={styles.friendsF1}/>
+            <Image source={require("../assets/friend.jpeg")} style={styles.friendsF2}/>
+            <Image source={require("../assets/friend.jpeg")} style={styles.friendsF3}/>
+        </View>
 
-    <View style={styles.up}></View>
-    <View style={styles.down}></View>
-            <Link href="/user" style={styles.userL}><Image source={require("../assets/user.png")} style={styles.user} /></Link>
-            <Link href="/main" style={styles.homeL}><Image source={require("../assets/home.png")} style={styles.home}/></Link>
-            <Image source={require("../assets/group.png")} style={styles.group}/>
-
+    <View style={styles.downBar}></View>
+    
+         <TouchableOpacity onPress={() => alert("Página indisponível no momento")}><Link href="/social" style={styles.socialL}><Image source={require("../assets/users-alt (1).png")} style={styles.social}/></Link></TouchableOpacity>
+        <Link href="/main" style={styles.homeL}><Image source={require("../assets/home (1).png")} style={styles.home}/></Link>
+        <Link href="/user" style={styles.userL}><Image source={require("../assets/user (1).png")} style={styles.user}/></Link>
 </LinearGradient>
     
    
@@ -35,102 +50,181 @@ const styles = StyleSheet.create({
 
     },
 
-
-    up: {
-        backgroundColor: '#484848',
-        opacity:0.7,
+    upBar: {
+        backgroundColor:"black",
+        padding: 70,
+        borderRadius: 10,
         position:"absolute",
-        marginBottom:800,
-        width:400,
-        padding:70,
-        borderRadius:50
+        marginBottom: 800,
+        width:500
+
     },
 
-    down: {
-        backgroundColor: '#484848',
-        opacity:0.7,
+    profile:{
+        backgroundColor:"#1B1B1B",
+        padding: 150,
+        borderRadius: 20,
         position:"absolute",
-        marginTop:800,
-        width:400,
-        padding:50,
-        borderRadius:50
+        height: 400,
+        marginBottom:250,
     },
 
-    user:{
-        width:30,
-        height:30,
+    conq:{
+        backgroundColor:"black",
+        padding: 30,
+        borderRadius: 20,
         position:"absolute",
-        marginTop:750,
-        marginLeft:200
+        marginTop:260,
+        height:100,
+        width:270,
+        marginLeft:15
     },
 
-
-    userL:{
+    conqf:{
+        borderRadius: 20,
         position:"absolute",
-        marginTop:750,
-        marginLeft:200
-
+        marginTop:10,
+        height:100,
+        width:100,
+        marginLeft:90
     },
 
-
-    home:{
-        width:30,
-        height:30,
-
-
-    },
-
-    homeL:{
+    friends:{
+        backgroundColor:"#1B1B1B",
+        padding: 100,
+        borderRadius: 20,
         position:"absolute",
-        marginTop:750,
-
+        marginTop:400,
+        width:"100%"
     },
 
-    group:{
-        width:40,
-        height:40,
+    foto:{
+    position:"absolute",
+    borderRadius: 200,
+    height:150,
+    width:150,
+    marginLeft:80,
+    marginTop:70
+    },
+
+    friendsF1:{
         position:"absolute",
-        marginTop:750,
-        marginRight:200
-    },
+        borderRadius: 200,
+        height:100,
+        width:100,
+        marginLeft:120,
+        marginTop:70
+        },
+
+    friendsF2:{
+        position:"absolute",
+        borderRadius: 200,
+        height:100,
+        width:100,
+        marginLeft:230,
+        marginTop:70
+            },
+
+    friendsF3:{
+            position:"absolute",
+            borderRadius: 200,
+            height:100,
+            width:100,
+            marginLeft:10,
+            marginTop:70
+        },
+
+
 
     title: {
         color:'#fff',
         fontSize: 24,
-        fontWeight: "bold",
+        fontWeight: "bold", 
         position:"absolute",
-        marginBottom:350
+        marginLeft:100,
+        marginTop:30,
         
     },
 
     subtitle:{
         color:'#fff',
         fontSize: 18,
+        fontWeight: "bold",
         position:"absolute",
-        marginBottom:250,
-        marginRight:50
-
+        marginTop:10,
+        marginLeft:20
     },
 
-    subtitle1:{
+    subtitleF:{
         color:'#fff',
         fontSize: 18,
+        fontWeight: "bold",
         position:"absolute",
-        marginBottom:175,
-        marginRight:100
+        marginTop:10,
+        marginLeft:20
+    },
+    
+    config:{
+        width:80,
+        height:80
+    },
+
+    configL:{
+    position:"absolute",
+    marginBottom:730,
 
     },
 
-    subtitle2:{
-        color:'#fff',
-        fontSize: 15,
-        position:"absolute",
-        marginBottom:100,
-        marginLeft:80
 
+    social:{
+        width:35,
+        height:35
+    },
+
+    socialL:{
+    position:"absolute",
+    marginRight:200,
+    marginTop:750
+    },
+
+    home:{
+        width:30,
+        height:30,
 
     },
 
+    homeL:{
+    position:"absolute",
+    marginTop:750
+    },
 
-})
+    user:{
+        width:30,
+        height:30
+    },
+
+    userL:{
+    position:"absolute",
+    marginLeft:200,
+    marginTop:750
+    },
+
+    downBar: {
+    backgroundColor:"black",
+    padding: 50,
+    borderRadius: 10,        position:"absolute",
+    marginTop: 800,
+    width:500
+
+
+
+        
+        
+    },
+    
+    },
+
+
+
+)
 

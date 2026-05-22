@@ -7,14 +7,16 @@ import { Button } from "@/components/button"
 import { Input } from "@/components/input"
 
 export default function IndexPage() {
+     const [nome,setNome] = useState("")
      const [email, setEmail] = useState("")
-       const [password, setPassword] = useState(" ")
-        const [confirmarsenha, setConfirmarsenha] = useState("")
+     const [senha, setSenha] = useState("")
+     const [confirmarsenha, setConfirmarsenha] = useState("")
+     const [id_usuario,setApelido] = useState("")
     
     
        const cadastrar = () => {
     
-        if( !email.trim() || !password.trim()) {
+        if( !email.trim() || !senha.trim()) {
             return Alert.alert ("Entrar","Preencha todo os campos para se cadastrar")
       
               }
@@ -27,16 +29,26 @@ export default function IndexPage() {
             const regexSenha =
             /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/
 
-            if (!regexSenha.test(password)) {
+            if (!regexSenha.test(senha)) {
                 alert("A senha precisa ter 8 caracteres, letras maiúsculas e minúsculas, números e caracteres especiais")
             
             return
         }
 
-            if (password !== confirmarsenha) {
+            if (senha !== confirmarsenha) {
                 alert("As senhas não coincidem")
                 return
          }
+
+         const dados ={
+            id_usuario,
+            nome,
+            email,
+            senha,
+        }
+        const json =JSON.stringify(dados)
+        console.log(json)
+
             alert("Cadastro realizado com sucesso")
             router.replace("/")
 
@@ -57,6 +69,15 @@ export default function IndexPage() {
                 <Text style={styles.suptext}>Nome:</Text>
                 <Input 
                     placeholder=" "
+                    value={nome}
+                    onChangeText={setNome}
+                />
+
+                <Text style={styles.suptext}>Apelido:</Text>
+                <Input 
+                    placeholder="Como podemos te chamar?"
+                    value={id_usuario}
+                    onChangeText={setApelido}
                 />
 
                 <Text style={styles.suptext}>Email:</Text>
@@ -64,6 +85,7 @@ export default function IndexPage() {
                     placeholder=" " 
                     keyboardType="email-address"
                     autoCapitalize="none"
+                    value={email}
                     onChangeText={setEmail}
                 />
 
@@ -71,8 +93,8 @@ export default function IndexPage() {
                 <Input 
                     placeholder=" "    
                     secureTextEntry
-                    value={password}
-                    onChangeText={setPassword}
+                    value={senha}
+                    onChangeText={setSenha}
 
                 />
 

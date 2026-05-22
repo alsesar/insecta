@@ -9,31 +9,41 @@ import { Input } from "@/components/input"
 
 export default function IndexPage() {
    const [email, setEmail] = useState("")
-   const [password, setPassword] = useState(" ")
-
-
+   const [senha, setSenha] = useState("")
+    
    const entrar = () => {
 
-    if( !email.trim() || !password.trim()) {
+    if( !email.trim() || !senha.trim()) {
         return Alert.alert ("Entrar","Preencha email e senha para entrar")
   
           }
             const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
     if (!regex.test(email)) {
-        alert("Use um email válido")
+        Alert.alert("Email","Use um email válido")
         return
     }
+
+    const regexSenha =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/
+
+    if (!regexSenha.test(senha)) {
+        Alert.alert("Senha","A senha precisa ter 8 caracteres, letras maiúsculas e minúsculas, números e caracteres especiais")
+    
+    return
+}
+
+const dados ={
+    email,
+    senha,
+}
+const json =JSON.stringify(dados)
+console.log(json)
+
      router.push("/main")
 
    }
-
-
-
-        //Alert.alert ("Entrar,Função de entrar acionada")
-            //console.log(email, password)
     
-
     return(
 
 <LinearGradient colors={['#000166', '#0002CC']} style={styles.container}>
@@ -49,13 +59,15 @@ export default function IndexPage() {
                         keyboardType="email-address" 
                         onChangeText={setEmail}
                         autoCapitalize="none"
+                        value={email}
                     />
 
                     <Text style={styles.suptext}>Senha:</Text>
                      <Input 
                         placeholder=" " 
                         secureTextEntry
-                        onChangeText={setPassword}
+                        onChangeText={setSenha}
+                        value={senha}
                     />
                     <Text style={styles.footerText}> 
                         Esquceu a senha? Clique aqui!
