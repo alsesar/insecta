@@ -1,6 +1,5 @@
-import { LinearGradient } from "expo-linear-gradient"
 import { Link } from "expo-router"
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native"
+import { Image, StyleSheet, Text, View } from "react-native"
 
 
 
@@ -9,7 +8,7 @@ export default function IndexPage() {
 
     return(
 
-<LinearGradient colors={['#000166', '#0002CC']} style={styles.container}>
+<View style={styles.container}>
    <View style={styles.upBar}></View>
         <Link href="/config" style={styles.configL}><Image source={require("../assets/logolinhayellow.png")} style={styles.config} /></Link>
         <View style={styles.profile}>
@@ -29,10 +28,10 @@ export default function IndexPage() {
 
     <View style={styles.downBar}></View>
     
-         <TouchableOpacity onPress={() => alert("Página indisponível no momento")}><Link href="/social" style={styles.socialL}><Image source={require("../assets/users-alt (1).png")} style={styles.social}/></Link></TouchableOpacity>
-        <Link href="/main" style={styles.homeL}><Image source={require("../assets/home (1).png")} style={styles.home}/></Link>
-        <Link href="/user" style={styles.userL}><Image source={require("../assets/user (1).png")} style={styles.user}/></Link>
-</LinearGradient>
+        <Link href="/social" style={styles.socialL}><Image source={require("../assets/users-alt (4).png")} style={styles.social}/></Link>
+        <Link href="/main" style={styles.homeL}><Image source={require("../assets/home (2).png")} style={styles.home}/></Link>
+        <Link href="/user" style={styles.userL}><Image source={require("../assets/user (3).png")} style={styles.user}/></Link>
+</View>
     
    
 
@@ -42,6 +41,7 @@ export default function IndexPage() {
 const styles = StyleSheet.create({
 
     container: {
+        backgroundColor:'#101016',
         flex: 1,
         justifyContent:"center",
         alignItems:"center",
@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
     socialL:{
     position:"absolute",
     marginRight:200,
-    marginTop:750
+    marginTop:705
     },
 
     home:{
@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
 
     homeL:{
     position:"absolute",
-    marginTop:750
+    marginTop:705
     },
 
     user:{
@@ -206,15 +206,16 @@ const styles = StyleSheet.create({
     userL:{
     position:"absolute",
     marginLeft:200,
-    marginTop:750
+    marginTop:705
     },
 
     downBar: {
-    backgroundColor:"black",
-    padding: 50,
-    borderRadius: 10,        position:"absolute",
-    marginTop: 800,
-    width:500
+        backgroundColor:"#07070A",
+        padding: 30,
+        borderRadius: 30,        
+        marginTop: 700,
+        width:350,
+        position:"absolute",
 
 
 
