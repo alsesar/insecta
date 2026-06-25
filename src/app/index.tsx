@@ -16,7 +16,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "@/components/button";
 import { Input } from "@/components/input";
 
-export default function IndexPage() {
+export default function Login() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [mostrar, setMostrar] = useState(false);
@@ -50,7 +50,7 @@ export default function IndexPage() {
     const json = JSON.stringify(dados);
     console.log(json);
 
-    router.push("/main");
+    router.push("/apelido");
   };
 
   return (
